@@ -2,7 +2,7 @@ const { ethers } = require('ethers');
 const { contract, wallet } = require('../config/ether.js');
 
 // Helper to serialize user data
-const serlializeUser = (user) => ({
+const serializeUser = (user) => ({
     id: user.id.toString(),
     name: user.name,
     firstName: user.firstName,
@@ -21,7 +21,8 @@ const isValidWallet = async (req, res) => {
         const isValidated = await contract.isWalletValidated(address);
         res.json({ address, isValidated });
     } catch (error) {
-        res.status(500).json({ error: error.massage });
+        console.error('Error validating wallet:', error);
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -50,7 +51,7 @@ const getUserById = async (req, res) => {
             return res.status(404).json({ error: 'Invalid user id'});
         }
 
-        res.json({ user: serlializeUser(user) });
+        res.json({ user: serializeUser(user) });
     } catch (error) {
         console.error('Error fetching user:', error);
         res.status(500).json({ error: error.message });
@@ -65,7 +66,7 @@ const getUserByAddress = async (req, res) => {
         }
 
         const user = await contract.getUserByAddress(address);
-        res.json({ user: serlializeUser(user) });
+        res.json({ user: serializeUser(user) });
     } catch (error) {
         console.error('Error fetching user:',error);
         res.status(500).json({ error: error.message });

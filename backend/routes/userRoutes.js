@@ -4,9 +4,9 @@ const userController = require('../controllers/userControllers');
 const authenticate = require('../middlewares/authenticate');
 
 // Routers
-router.get('isvalid/:address', userController.isValidWallet);
+router.get('/isvalid/:address', userController.isValidWallet);
 router.post('/addUser', userController.addUser);
 router.get('/user/:id', authenticate, userController.getUserById);
-router.get('/adddress/:address', userController.getUserByAddress);
+router.get('/address/:address', userController.getUserByAddress);
 
 module.exports = router;
